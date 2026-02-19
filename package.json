@@ -1,0 +1,24 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "A Node.js URL shortener with custom aliases, IP-based rate limiting (5 links/hour), in-memory caching, buffered disk persistence, and detailed link analytics.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DonaldOgbe/URL-Shortener.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DonaldOgbe/URL-Shortener/issues"
+  },
+  "homepage": "https://github.com/DonaldOgbe/URL-Shortener#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
