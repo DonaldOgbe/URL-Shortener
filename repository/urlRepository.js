@@ -11,4 +11,8 @@ export const saveUrl = (url) => {
 
 export const getUrl = (code) => {
     return db[code];
- }
+}
+ 
+export const updateUrl = (url) => {
+    return db[url.code] = url;
+}
