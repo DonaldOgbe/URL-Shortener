@@ -3,7 +3,7 @@ import { saveUrl, getUrl, updateUrl } from "../repository/urlRepository.js";
 import { Url } from "../model/Url.js";
 import { getConfig } from "../config.js";
 
-
+const reservedCodes = ["code", "report"];
 
 export const shortenUrl = (request, response, next) => {
   try {
@@ -14,6 +14,10 @@ export const shortenUrl = (request, response, next) => {
 
     if (!code || code.trim() === "") {
       code = getGeneratedCode();
+    }
+
+    if (reservedCodes.includes(code.toLowerCase())) {
+      throw new Error("This code is reserved");
     }
 
     const url = new Url(code, originalUrl);
