@@ -44,4 +44,22 @@ export const getOriginalUrl = (request, response, next) => {
   } catch (error) {
     next(error);
   }
+
+  
+};
+
+export const getReport = (request, response, next) => {
+  try {
+    const code = request.params.code;
+
+    const url = getUrl(code);
+
+    if (url) {
+      response.status(200).json({[url.code]: url})
+    } else {
+      throw new Error("code does not exist"); 
+    }
+  } catch (error) {
+    next(error)
+  }
 };
