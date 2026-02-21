@@ -7,6 +7,7 @@ import {
 } from "./controller/urlController.js";
 import { errorMiddleware } from "./middleware/errorMiddleware.js";
 import { codeValidationMiddleware } from "./middleware/codeValidationMiddleware.js";
+import { rateLimitingMiddleware } from "./middleware/rateLimitingMiddleware.js"
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ const app = express();
 
 app.use(express.json());
 
-app.post("/shorten", shortenUrl);
+app.post("/shorten", rateLimitingMiddleware, shortenUrl);
 
 app.get("/:code", codeValidationMiddleware ,getOriginalUrl);
 
