@@ -24,6 +24,8 @@ setClicks(clicks);
 
 const app = express();
 
+app.set("trust proxy", true);
+
 app.use(express.json());
 
 app.post("/shorten", rateLimitingMiddleware, shortenUrl);
