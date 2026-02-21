@@ -8,8 +8,19 @@ import {
 import { errorMiddleware } from "./middleware/errorMiddleware.js";
 import { codeValidationMiddleware } from "./middleware/codeValidationMiddleware.js";
 import { rateLimitingMiddleware } from "./middleware/rateLimitingMiddleware.js"
+import { loadUrls, loadClicks } from "./repository/jsonStorage.js";
+import { setUrls } from "./repository/urlRepository.js";
+import { setClicks } from "./repository/clickRepository.js"
 
 dotenv.config();
+
+const [urls, clicks] = await Promise.all([
+  loadUrls(), 
+  loadClicks(),
+])
+
+setUrls(urls);
+setClicks(clicks);
 
 const app = express();
 

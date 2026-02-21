@@ -1,18 +1,29 @@
+import { bufferSaveUrls } from "./jsonStorage.js";
 
-let db = {};
+let db;
+
+export const setUrls = (urls) => {
+  db = urls;
+};
 
 export const saveUrl = (url) => {
-    if (db[url.code]) {
-        throw new Error("Code already exists");
-    }
+  if (db[url.code]) {
+    throw new Error("Code already exists");
+  }
 
-    return db[url.code] = url;
- }
+  const savedUrl = (db[url.code] = url);
+
+  bufferSaveUrls(db);
+  return savedUrl;
+};
 
 export const getUrl = (code) => {
-    return db[code];
-}
- 
+  return db[code];
+};
+
 export const updateUrl = (url) => {
-    return db[url.code] = url;
-}
+  const updatedUrl = (db[url.code] = url);
+
+  bufferSaveUrls(db);
+  return updatedUrl;
+};
