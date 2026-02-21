@@ -2,6 +2,8 @@ import { getGeneratedCode } from "./codeGenerator.js";
 import { saveUrl, getUrl, updateUrl } from "../repository/urlRepository.js";
 import { Url } from "../model/Url.js";
 import { getConfig } from "../config.js";
+import { saveClick, getClicks } from "../repository/clickRepository.js";
+import { Click } from "../model/Click.js"
 
 const reservedCodes = ["code", "report"];
 
@@ -24,7 +26,9 @@ export const shortenUrl = (request, response, next) => {
 
     const savedUrl = saveUrl(url);
 
-    response.status(201).json({shortenUrl: `${baseUrl}/${savedUrl.code}`, ...savedUrl});
+    response
+      .status(201)
+      .json({ shortenUrl: `${baseUrl}/${savedUrl.code}`, ...savedUrl });
   } catch (error) {
     next(error);
   }
@@ -41,6 +45,9 @@ export const getOriginalUrl = (request, response, next) => {
       url.lastAccessedAt = new Date();
       updateUrl(url);
 
+      const click = new Click(url.code, request.ip);
+      saveClick(click);
+
       response.redirect(url.originalUrl);
     } else {
       throw new Error("code does not exist");
@@ -48,8 +55,6 @@ export const getOriginalUrl = (request, response, next) => {
   } catch (error) {
     next(error);
   }
-
-  
 };
 
 export const getReport = (request, response, next) => {
@@ -59,11 +64,13 @@ export const getReport = (request, response, next) => {
     const url = getUrl(code);
 
     if (url) {
-      response.status(200).json({[url.code]: url})
+      const clicks = getClicks(url.code);
+
+      response.status(200).json({ url: url, clicks:  clicks});
     } else {
-      throw new Error("code does not exist"); 
+      throw new Error("code does not exist");
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
