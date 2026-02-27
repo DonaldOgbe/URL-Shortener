@@ -4,6 +4,7 @@ import {
   shortenUrl,
   getOriginalUrl,
   getReport,
+  getHomePage,
 } from "./controller/urlController.js";
 import { errorMiddleware } from "./middleware/errorMiddleware.js";
 import { codeValidationMiddleware } from "./middleware/codeValidationMiddleware.js";
@@ -27,6 +28,8 @@ const app = express();
 app.set("trust proxy", true);
 
 app.use(express.json());
+
+app.get("/", getHomePage)
 
 app.post("/shorten", rateLimitingMiddleware, shortenUrl);
 

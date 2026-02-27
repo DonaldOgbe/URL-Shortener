@@ -74,3 +74,13 @@ export const getReport = (request, response, next) => {
     next(error);
   }
 };
+
+export const getHomePage = (request, response, next) => {
+  try {
+    return response.redirect(
+      "https://documenter.getpostman.com/view/35972225/2sBXcEkLjU",
+    );
+  } catch (error) {
+    next(error);
+  }
+};
